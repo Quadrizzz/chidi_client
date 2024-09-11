@@ -32,3 +32,54 @@
     font-weight: 500;
     margin: 0;
 }
+
+.analytics_container {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-column-gap: 10%;
+    grid-row-gap: 5%;
+    background: #DCE0E8;
+    padding: 2vw;
+    margin-top: 5vw;
+}
+
+.analytics_charts{
+    width: 100%;
+    background: white;
+    border-radius: 1vw;
+    height: 25vw;
+}
+
+.analytics_charts p {
+    font-size: 1.2vw;
+    margin: 0;
+    font-family: 'DM Sans';
+    font-weight: 700;
+    position: relative;
+    left: 3vw;
+    top: 3vw;
+}
+
+tspan {
+    font-family: 'DM Sans';
+    font-weight: 700;
+    font-size: 0.8vw;
+}
+
+.dropdowns {
+    width: 90%;
+    position: relative;
+    top: 2vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.dropdown {
+    width: 29%;
+    margin-left: 1vw;
+    font-family: 'DM Sans';
+    font-weight: 400;
+}

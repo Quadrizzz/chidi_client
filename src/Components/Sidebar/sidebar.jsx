@@ -40,7 +40,7 @@ const Sidebar = (props)=>{
                     <img src={Analytics} alt="" />
                     <p>Analytics</p>
                 </div>
-                <div className={props.page === "staff" ? "item selected" :  "item"} onClick={()=>{changePage("staff")}}>
+                <div className={props.page === "staff" ? "item selected" :  "item"} onClick={()=>{changePage("staffs")}}>
                     <img src={Staff} alt="" />
                     <p>Staff Information</p>
                 </div>
