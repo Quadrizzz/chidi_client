@@ -7,7 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 
 
-const Staffs = ()=>{
+const Staffs = ( props )=>{
 
     const [Lecturers, setLecturers] = useState([]);
     const [Academic, setAcademic] = useState([])
@@ -15,10 +15,12 @@ const Staffs = ()=>{
     const navigate = useNavigate()
 
     useEffect(()=>{
+        props.setPage("staff")
         const fetchData = async ()=>{
             const Lectuers = await Promise.resolve(fetch("http://localhost:3000/api/staff"));
             const LecturersJson = await Promise.resolve(Lectuers.json());
             setLecturers(LecturersJson);
+            console.log(LecturersJson)
             const Academic = LecturersJson.filter((el)=>{
                 return el.category === "Academic"
             })
@@ -34,6 +36,7 @@ const Staffs = ()=>{
     function flattenLecturerData(lecturers) {
         const flattened =  lecturers.map((lecturer, index) => ({
             id: index + 1,
+            unique_id: lecturer._id, 
             ippis_no: lecturer.ippis_no,
             staff_no: lecturer.staff_no,
             title: lecturer.title,
@@ -85,6 +88,7 @@ const Staffs = ()=>{
     
     const columns = [
         { field: 'id', headerName: 'ID', width: 150},
+        { field: 'unique_id', headerName: 'Unique Id', width: 250},
         { field: 'ippis_no', headerName: 'IPPIS No', width: 150 },
         { field: 'staff_no', headerName: 'Staff No', width: 150 },
         { field: 'title', headerName: 'Title', width: 150 },
@@ -138,7 +142,8 @@ const Staffs = ()=>{
                 <h1>Staff Information</h1>
                 <p>{Lecturers.length} currently at the University</p>
             </div>
-            <div className="dashboard_table">
+            <button id="all_staff" onClick={()=>{navigate('/addStaff')}}>Add Staff</button>
+            <div className="staff_table">
                 <div  style={{ height: 600, width: '100%' }}>
                     <DataGrid
                         rows={flattenLecturerData(Lecturers)}
@@ -146,9 +151,9 @@ const Staffs = ()=>{
                         pageSize={10}
                         rowsPerPageOptions={[10]}
                         getRowId={(row) => row.id}
+                        onRowClick={(params)=>{navigate(`/staff/${params.row.unique_id}`)}}
                     />
                 </div>
-                <button id="all_staff">Add Staff</button>
             </div>
         </div>
     )

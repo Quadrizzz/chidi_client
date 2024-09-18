@@ -33,6 +33,7 @@ const Dashboard = (props)=>{
     function flattenLecturerData(lecturers) {
         const flattened =  lecturers.map((lecturer, index) => ({
             id: index + 1,
+            unique_id: lecturer._id,
             ippis_no: lecturer.ippis_no,
             staff_no: lecturer.staff_no,
             title: lecturer.title,
@@ -84,6 +85,7 @@ const Dashboard = (props)=>{
     
     const columns = [
         { field: 'id', headerName: 'ID', width: 150},
+        { field: 'unique_id', headerName: 'Unique Id', width: 250},
         { field: 'ippis_no', headerName: 'IPPIS No', width: 150 },
         { field: 'staff_no', headerName: 'Staff No', width: 150 },
         { field: 'title', headerName: 'Title', width: 150 },
@@ -182,9 +184,10 @@ const Dashboard = (props)=>{
                         pageSize={10}
                         rowsPerPageOptions={[10]}
                         getRowId={(row) => row.id}
+                        onRowClick={(params)=>{navigate(`/staff/${params.row.unique_id}`)}}
                     />
                 </div>
-                <button id="all_staff">View All Staff</button>
+                <button id="all_staff" onClick={()=>{navigate('/staffs')}}>View All Staff</button>
             </div>
         </div>
     )

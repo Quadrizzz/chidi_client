@@ -1,0 +1,147 @@
+.new_staff{
+    width: 82%;
+    position: relative;
+    left: 18%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.new_staff_top {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 3vw;
+}
+
+.new_staff_top h1 {
+    color: black;
+    font-size: 2vw;
+    font-family: 'DM Sans';
+    font-weight: 500;
+    margin: 0;
+}
+
+.new_staff_top p {
+    color: black;
+    font-size: 1vw;
+    font-family: 'DM Sans';
+    font-weight: 500;
+}
+
+.new_staff button{
+    align-self: self-start;
+    position: relative;
+    left: 4vw;
+}
+
+.form {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 30% 30%;
+    grid-column-gap: 10vw;
+    grid-row-gap: 3vw;
+    margin-bottom: 3vw;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.input p {
+    margin: 0;
+    font-family: 'DM Sans';
+    font-weight: 500;
+    font-size: 0.8vw;
+    margin-bottom: 0.5vw;
+}
+
+.input label {
+    margin: 0;
+    font-family: 'DM Sans';
+    font-weight: 500;
+    font-size: 0.8vw;
+    margin-bottom: 0.5vw;
+}
+
+.input input {
+    width: 95%;
+    border: none;
+    padding: 0.6vw;
+    font-family: 'DM Sans';
+    background: #d9d6d6;
+    border-radius: 0.5vw;
+}
+
+.react-dropdown-select.undefined.css-wmy1p7-ReactDropdownSelect.e1gzf2xs0 {
+    background: #d9d6d6 !important;
+    width: 100%;
+    border-radius: 0.5vw;
+}
+
+.input>div {
+    width: 100%;
+    font-family: 'DM Sans';
+    border-radius: 0.5vw;
+    margin-top: 0.2vw;
+}
+
+.input .css-jznujr-ContentComponent{
+    height: 2vw;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input .css-jznujr-ContentComponent input{
+    width: 40%;
+    display: none;
+}
+
+select {
+    height: 2.2vw;
+    background: #d9d6d6;
+    border: none;
+    width: 100%;
+    padding: 0.6vw;
+    font-family: 'DM Sans';
+    border-radius: 0.5vw;
+}
+
+.input button {
+    left: 0;
+    border: none;
+    padding: 0.7vw;
+    background: #0D4CC5;
+    width: 50%;
+    font-family: 'DM Sans';
+    font-size: 0.8vw;
+    border-radius: 0.8vw;
+    color: white;
+    cursor: pointer;
+}
+
+.submit img {
+    width: 10%;
+    margin-left: 1vw;
+    transition: .5s all ease-in;
+    opacity: 0;
+}
+
+.showLoading{
+    opacity: 1 !important;
+}
+
+.submit {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
