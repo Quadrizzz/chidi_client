@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import './analytics.css';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Select from "react-dropdown-select";
 
 const Analytics = ()=>{
@@ -15,6 +15,13 @@ const Analytics = ()=>{
     const [genderData, setGenderData] = useState(null)
     const [category, setCategoryData] = useState(null)
     const [ageData, setAgeData] = useState(null)
+    const [campusData, setCampusData] = useState(null)
+    const [natureData, setNatureData] = useState(null)
+    const [maritalData, setMaritalData] = useState(null)
+    const [salaryData, setSalaryData] = useState(null)
+    const [qualificationData, setQualificationData] = useState(null)
+    const [other, setOthers] = useState("Gender")
+    const [phdData, setPhdData] = useState(null)
 
     useEffect(()=>{
         const fetchData = async ()=>{
@@ -43,11 +50,29 @@ const Analytics = ()=>{
         }
     }, [Faculty, Departments, currentDepartment, currentFaculty])
 
+    const others = [
+        {name: "Campus", value: ["Akoka", "Idi araba", "Main Campus"]},
+        {name: "Qualification", value: ['BPharma', 'BSc', 'PHD']},
+        {name: "PHD", value: [true, false]},
+        {name: "Nature", value: ['Permanent', 'Temporary', 'Full-Time', 'Part-Time']},
+        {name: "Marital Status", value: ['Single', 'Married', 'Complicated']},
+        {name: 'Age', value: 'age'},
+        {name: "Gender", value: "gender"},
+        {name: "Category", value: "category"},
+        {name: "Salary Structure", value: ["CONUASS", "CONTISS"]}
+    ]
+
     const generateChartData = ()=>{
         if(currentFaculty === "All"){
             generateGenderData(Lecturers)
             generateCategoryData(Lecturers)
             generateAgeData(Lecturers)
+            generateCampusData(Lecturers)
+            generateNatureData(Lecturers)
+            generateMaritalData(Lecturers)
+            geneerateSalarayData(Lecturers)
+            generateQualificationData(Lecturers)
+            generatePhdData(Lecturers)
         }
         else{
             if(currentDepartment === "All"){
@@ -55,13 +80,24 @@ const Analytics = ()=>{
                 generateGenderData(newData)
                 generateCategoryData(newData)
                 generateAgeData(newData)
+                generateCampusData(newData)
+                generateNatureData(newData)
+                generateMaritalData(newData)
+                geneerateSalarayData(newData)
+                generateQualificationData(newData)
+                generatePhdData(newData)
             }
             else{
                 let newData = Lecturers.filter((lecturer)=>{ return lecturer.faculty === currentFaculty && lecturer.department === currentDepartment})
                 generateGenderData(newData)
                 generateCategoryData(newData)
                 generateAgeData(newData)
-                console.log(newData)
+                generateCampusData(newData)
+                generateNatureData(newData)
+                generateMaritalData(newData)
+                geneerateSalarayData(newData)
+                generateQualificationData(newData)
+                generatePhdData(newData)
             }
         }
     }
@@ -131,6 +167,84 @@ const Analytics = ()=>{
           
     }
 
+    const generateCampusData = (Data) =>{
+        let akoks = Data.filter((el)=>{return el.campus.toLowerCase() === "akoka" });
+        let idibs = Data.filter((el)=>{return el.campus.toLowerCase() === "idi araba" });
+        let mains = Data.filter((el)=>{return el.campus.toLowerCase() === "main campus" });
+        setCampusData([
+            {
+                name: "Akoka", value : akoks.length,
+                name: "Idi Araba", value : idibs.length,
+                name: "Main Campus", value: mains.length
+            }
+        ])
+    }
+
+    const generateNatureData = (Data)=>{
+        const natureValues = others[3].value;
+        let data = []
+        for(let i = 0; i < natureValues.length; i++){
+            let placeholder = Data.filter((el)=>{return el.nature.toLowerCase() === natureValues[i].toLocaleLowerCase()});
+            let placeholderData = {
+                name: natureValues[i], value: placeholder.length
+            }
+            data.push(placeholderData)
+        }
+        setNatureData(data)
+    }
+
+    const generateMaritalData = (Data)=>{
+        const dataValues = others[4].value;
+        let data = []
+        for(let i = 0; i < dataValues.length; i++){
+            let placeholder = Data.filter((el)=>{return el.marital_status.toLowerCase() === dataValues[i].toLocaleLowerCase()});
+            let placeholderData = {
+                name: dataValues[i], value: placeholder.length
+            }
+            data.push(placeholderData)
+        }
+        setMaritalData(data)
+    }
+
+    const geneerateSalarayData = (Data)=>{
+        const dataValues = others[8].value;
+        let data = []
+        for(let i = 0; i < dataValues.length; i++){
+            let placeholder = Data.filter((el)=>{return el.salary_structure.toLowerCase() === dataValues[i].toLocaleLowerCase()});
+            let placeholderData = {
+                name: dataValues[i], value: placeholder.length
+            }
+            data.push(placeholderData)
+        }
+        setSalaryData(data)
+    }
+
+    const generateQualificationData = (Data) =>{
+        const dataValues = others[1].value;
+        let data = []
+        for(let i = 0; i < dataValues.length; i++){
+            let placeholder = Data.filter((el)=>{return el.qualification.toLowerCase() === dataValues[i].toLocaleLowerCase()});
+            let placeholderData = {
+                name: dataValues[i], value: placeholder.length
+            }
+            data.push(placeholderData)
+        }
+        setQualificationData(data)
+    }
+
+    const generatePhdData = (Data) =>{
+        const dataValues = others[2].value;
+        let data = []
+        for(let i = 0; i < dataValues.length; i++){
+            let placeholder = Data.filter((el)=>{return el.phd === dataValues[i]});
+            let placeholderData = {
+                name: dataValues[i].toString(), value: placeholder.length
+            }
+            data.push(placeholderData)
+        }
+        setPhdData(data)
+    }
+
     let renderLabel = function(entry) {
         return `( ${entry.name} ) ${entry.value}`;
     }
@@ -151,6 +265,10 @@ const Analytics = ()=>{
 
     const handleDepartmentChange = (values)=>{
         setCurrentDepartment(values[0].name)
+    }
+
+    const handleOthersChange = (values)=>{
+        setOthers(values[0].name)
     }
 
     return(
@@ -178,9 +296,19 @@ const Analytics = ()=>{
                         onChange={(values) => handleDepartmentChange(values)}
                     />
                 </div>
+                <div className="dropdown">
+                    <p>Categories</p>
+                    <Select
+                        options={others}
+                        labelField="name"
+                        valueField="value"
+                        onChange={(values) => handleOthersChange(values)}
+                        defaultInputValue={others[6]}
+                    />
+                </div>
             </div>
             <div className="analytics_container">
-                <div className="analytics_charts">
+                <div className={other === "Gender" ? "show_analytics analytics_charts" : "analytics_charts"}>
                     <p>Gender Distribution</p>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart width={600} height={600}>
@@ -189,7 +317,7 @@ const Analytics = ()=>{
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-                <div className="analytics_charts">
+                <div className={other === "Category" ? "show_analytics analytics_charts" : "analytics_charts"}>
                     <p>Staff Category Distribution</p>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart width={600} height={600}>
@@ -198,12 +326,126 @@ const Analytics = ()=>{
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-                <div className="analytics_charts">
+                <div className={other === "Age" ? "show_analytics analytics_charts" : "analytics_charts"}>
                     <p>Age Distribution</p>
                     <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                        width={500}
+                        height={300}
+                        data={ageData}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                        barSize={20}
+                        >
+                        <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "Marital Status" ? "show_analytics analytics_charts" : "analytics_charts"}>
+                    <p>Marital Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                        width={500}
+                        height={300}
+                        data={maritalData}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                        barSize={20}
+                        >
+                        <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "Qualification" ? "show_analytics analytics_charts" : "analytics_charts"}>
+                    <p>Qualification Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                        width={500}
+                        height={300}
+                        data={qualificationData}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                        barSize={20}
+                        >
+                        <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "Nature" ? "show_analytics analytics_charts" : "analytics_charts"}>
+                    <p>Job Nature Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
                         <PieChart width={600} height={600}>
-                            <Pie data={ageData} dataKey="value" cx="50%" cy="50%" outerRadius={150} fill="#344BFD"/>
-                            <Pie data={ageData} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#F4A79D" label = {renderLabel} />
+                            <Pie data={natureData} dataKey="value" cx="50%" cy="50%" outerRadius={150} fill="#344BFD"/>
+                            <Pie data={natureData} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#F4A79D" label = {renderLabel} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "Campus" ? "show_analytics analytics_charts" : "analytics_charts"}>
+                    <p>Campus Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <PieChart width={600} height={600}>
+                            <Pie data={campusData} dataKey="value" cx="50%" cy="50%" outerRadius={150} fill="#344BFD"/>
+                            <Pie data={campusData} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#F4A79D" label = {renderLabel} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "PHD" ? "show_analytics analytics_charts" : "analytics_charts"}>
+                    <p>PHD Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                        width={500}
+                        height={300}
+                        data={phdData}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                        barSize={20}
+                        >
+                        <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "Salary Structure" ? "show_analytics analytics_charts" : "analytics_charts"}>
+                    <p>Salary Structure Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <PieChart width={600} height={600}>
+                            <Pie data={salaryData} dataKey="value" cx="50%" cy="50%" outerRadius={150} fill="#344BFD"/>
+                            <Pie data={salaryData} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#F4A79D" label = {renderLabel} />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>

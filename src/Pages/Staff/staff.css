@@ -33,7 +33,7 @@
     font-weight: 500;
 }
 
-.staff button{
+#all_staff{
     align-self: self-start;
     position: relative;
     left: 4vw;

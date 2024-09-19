@@ -35,20 +35,33 @@
 
 .analytics_container {
     width: 90%;
-    display: grid;
-    grid-template-columns: 45% 45%;
-    grid-column-gap: 10%;
-    grid-row-gap: 5%;
     background: #DCE0E8;
     padding: 2vw;
     margin-top: 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45vw;
 }
 
 .analytics_charts{
-    width: 100%;
+    width: 70%;
     background: white;
     border-radius: 1vw;
-    height: 25vw;
+    height: 30vw;
+    position: absolute;
+    transition: .5s all ease-in;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 7vw;
+}
+
+.show_analytics{
+    opacity: 1 !important;
 }
 
 .analytics_charts p {
@@ -57,8 +70,7 @@
     font-family: 'DM Sans';
     font-weight: 700;
     position: relative;
-    left: 3vw;
-    top: 3vw;
+    bottom: 3vw;
 }
 
 tspan {

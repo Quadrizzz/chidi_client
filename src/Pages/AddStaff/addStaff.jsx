@@ -157,9 +157,13 @@ const AddStaff = (props)=>{
             });
       
             const data = await response.json();
-            console.log('New staff added:', data);
-            setLoading(false)
-            navigate("/staffs")
+            if(data.message === "New Lecturer Created"){
+                setLoading(false)
+                navigate("/staffs")
+            }
+            else{
+                setLoading(false)
+            }
         } catch (error) {
             console.error('Error:', error);
             setLoading(false)
