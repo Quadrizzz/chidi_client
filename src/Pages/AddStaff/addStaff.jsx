@@ -55,7 +55,7 @@ const AddStaff = (props)=>{
         date_of_inactive: '',
         pfa: '',
         pen_number: '',
-        category: '',
+        category: 'Academic',
         campus: '',
         leave_status: false,
         start_date: '',
@@ -215,6 +215,24 @@ const AddStaff = (props)=>{
     const categoryOption = [
         {name: "Academinc", value: "Academic", mainName: "category"},
         {name: "Non-Academic", value:"Non-Academic", mainName: "category"}
+    ]
+
+    const postDesignation_aca = [
+        {name: "Lecturer 1", value: "Lecturer 1", mainName: "post_designation"},
+        {name: "Lecturer 2", value: "Lecturer 2", mainName: "post_designation"},
+        {name: "Professor", value: "Professor", mainName: "post_designation"},
+        {name: "Graduate Assistant", value: "Graduate Assistant", mainName: "post_designation"},
+        {name: "Librarian 1", value: "Librarian 1", mainName: "post_designation"},
+        {name: "Librarian 2", value: "Librarian 2", mainName: "post_designation"},
+        {name: "Assistant Lecturer", value: "Assistant Lecturer", mainName: "post_designation"},
+        {name: "Associate Professor", value: "Associate Professor", mainName: "post_designation"},
+        {name: "Senior Lecturer", value: "Senior Lecturer", mainName: "post_designation"}
+    ]
+
+    const postDesignation_nonaca = [
+        {name: "Administrative Staff", value: "Administrative Staff", mainName: "post_designation"},
+        {name: "Technical Staff", value: "Technical Staff", mainName: "post_designation"},
+        {name: "Junior Staff", value: "Junior Staff", mainName: "post_designation"}
     ]
 
     const campusOptions = [
@@ -395,6 +413,16 @@ const AddStaff = (props)=>{
                     <p>Category:</p>
                     <Select
                         options={categoryOption}
+                        labelField="name"
+                        valueField="name"
+                        onChange={(value) => handleSelectChange(value)}
+                        isSearchable={true}
+                    />
+                </div>
+                <div className="input">
+                    <p>Post/Designation:</p>
+                    <Select
+                        options={formData.category === "Academic" ? postDesignation_aca : postDesignation_nonaca}
                         labelField="name"
                         valueField="name"
                         onChange={(value) => handleSelectChange(value)}

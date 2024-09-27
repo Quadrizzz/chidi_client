@@ -20,6 +20,7 @@ const Analytics = ()=>{
     const [maritalData, setMaritalData] = useState(null)
     const [salaryData, setSalaryData] = useState(null)
     const [qualificationData, setQualificationData] = useState(null)
+    const [post_designation, setPostDesignation] = useState(null)
     const [other, setOthers] = useState("Gender")
     const [phdData, setPhdData] = useState(null)
 
@@ -59,7 +60,8 @@ const Analytics = ()=>{
         {name: 'Age', value: 'age'},
         {name: "Gender", value: "gender"},
         {name: "Category", value: "category"},
-        {name: "Salary Structure", value: ["CONUASS", "CONTISS"]}
+        {name: "Salary Structure", value: ["CONUASS", "CONTISS"]},
+        {name: "Post/Designation", value: ["Lecturer 1", "Lecturer 2", "Professor", "Graduate Assistant", "Librarian 1", "Librarian 2", "Assistant Lecturer", "Associate Professor", "Senior Lecturer", "Administrative Staff", "Technical Staff", "Junior Staff"]}
     ]
 
     const generateChartData = ()=>{
@@ -73,6 +75,7 @@ const Analytics = ()=>{
             geneerateSalarayData(Lecturers)
             generateQualificationData(Lecturers)
             generatePhdData(Lecturers)
+            generateDesignationData(Lecturers)
         }
         else{
             if(currentDepartment === "All"){
@@ -86,6 +89,7 @@ const Analytics = ()=>{
                 geneerateSalarayData(newData)
                 generateQualificationData(newData)
                 generatePhdData(newData)
+                generateDesignationData(newData)
             }
             else{
                 let newData = Lecturers.filter((lecturer)=>{ return lecturer.faculty === currentFaculty && lecturer.department === currentDepartment})
@@ -98,6 +102,7 @@ const Analytics = ()=>{
                 geneerateSalarayData(newData)
                 generateQualificationData(newData)
                 generatePhdData(newData)
+                generateDesignationData(newData)
             }
         }
     }
@@ -230,6 +235,19 @@ const Analytics = ()=>{
             data.push(placeholderData)
         }
         setQualificationData(data)
+    }
+
+    const generateDesignationData = (Data) =>{
+        const dataValues = others[9].value;
+        let data = []
+        for(let i = 0; i < dataValues.length; i++){
+            let placeholder = Data.filter((el)=>{return el.post_designation.toLowerCase() === dataValues[i].toLocaleLowerCase()});
+            let placeholderData = {
+                name: dataValues[i], value: placeholder.length
+            }
+            data.push(placeholderData)
+        }
+        setPostDesignation(data)
     }
 
     const generatePhdData = (Data) =>{
@@ -432,6 +450,30 @@ const Analytics = ()=>{
                         barSize={20}
                         >
                         <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className={other === "Post/Designation" ? "show_analytics post_analytics" : "post_analytics"}>
+                    <p>Designation Distribution</p>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                        width={800}
+                        height={300}
+                        data={post_designation}
+                        margin={{
+                            top: 5,
+                            right: 20,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                        barSize={10}
+                        >
+                        <XAxis dataKey="name" scale="point" padding={{ left: 5, right: 5 }} />
                         <YAxis />
                         <Tooltip />
                         <Legend />
